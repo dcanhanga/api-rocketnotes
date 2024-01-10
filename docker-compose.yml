@@ -1,0 +1,14 @@
+version: '2.3'
+
+services:
+  rentacar_db:
+    image: bitnami/postgresql
+    container_name: rocketnotes
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=rocketnotes
+      - POSTGRES_PASSWORD=rocketnotes
+      - POSTGRES_DB=rocketnotes
+
