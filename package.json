@@ -1,0 +1,55 @@
+{
+  "name": "api-rocketnotes",
+  "version": "1.0.0",
+  "description": "Api rocketnotes",
+  "scripts": {
+    "dev": "tsx --watch --inspect --no-warnings  src/server.ts",
+    "build": "tsup",
+    "start": "npm build && node dist/server.js",
+    "lint-staged": "lint-staged",
+    "lint": "eslint src -- ext .ts -- fix",
+    "prepare": "husky install"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "keywords": [],
+  "author": "Domingos Canhanga",
+  "license": "MIT",
+  "lint-staged": {
+    "*.md": [
+      "yarn prettier --write"
+    ],
+    "*.{js,ts}": [
+      "yarn eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "express-async-errors": "3.1.1",
+    "zod": "3.22.4"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "@types/node": "20.10.8",
+    "@types/swagger-ui-express": "4.1.6",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-config-standard-with-typescript": "43.0.0",
+    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-prettier": "5.1.2",
+    "eslint-plugin-promise": "^6.0.0",
+    "git-commit-msg-linter": "5.0.6",
+    "husky": "8.0.3",
+    "lint-staged": "15.2.0",
+    "prettier": "3.1.1",
+    "tsup": "8.0.1",
+    "tsx": "4.7.0",
+    "typescript": "5.3.3"
+  }
+}
