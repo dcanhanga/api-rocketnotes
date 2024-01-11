@@ -17,6 +17,7 @@ class CreateUsersUseCase {
     if (emailAlreadyExits) {
       throw new AppError('Esse email já está cadastrado', 409);
     }
+
     const password_hash = await hash(data.password, 6);
     const newUser: IUser = {
       id: randomUUID(),
