@@ -2,17 +2,13 @@
 import knexSetup, { type Knex } from 'knex';
 import path from 'path';
 
-import { env } from '../../utils/env';
+import { env } from '../../shared/env';
+const MAX_CONNECTION_ATTEMPTS = 5;
+const RETRY_INTERVAL_MS = 2000; // 2 segundos
 
-export const config: Knex.Config = {
+const config: Knex.Config = {
   client: 'pg',
-  connection: {
-    host: env.DB_HOST,
-    user: env.DB_USER,
-    port: env.DB_PORT,
-    password: env.DB_PASSWORD,
-    database: env.DB_DATABASE
-  },
+  connection: env.DATABASE_URL,
   seeds: {
     directory: path.resolve(__dirname, './', 'seeds')
   },
@@ -20,16 +16,24 @@ export const config: Knex.Config = {
     directory: path.resolve(__dirname, './', 'migrations')
   }
 };
-const runMigrations = async (): Promise<void> => {
-  try {
-    console.log('Running migrations...');
-    console.log(env.DB_PASSWORD);
-    await knex.migrate.latest();
-    console.log('Migrations executed successfully!');
-  } catch (error) {
-    console.error('Error running migrations:', error);
-    throw new Error('Failed to run migrations. See the error above for details.');
+const waitForDatabaseConnection = async (): Promise<void> => {
+  console.log('Connecting to the database...');
+  let attempts = 0;
+  while (attempts < MAX_CONNECTION_ATTEMPTS) {
+    try {
+      await knex.raw('SELECT 1'); // Tentar uma consulta simples
+      console.log('Connected to the database!');
+      return;
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      console.error(`Error connecting to the database: ${error}`);
+      attempts++;
+      console.log(`Retrying in ${RETRY_INTERVAL_MS} milliseconds...`);
+      await new Promise(resolve => setTimeout(resolve, RETRY_INTERVAL_MS));
+    }
   }
+  throw new Error('Failed to connect to the database after multiple attempts.');
 };
 const knex = knexSetup(config);
-export { runMigrations, knex };
+
+export { waitForDatabaseConnection, knex, config };

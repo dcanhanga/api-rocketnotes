@@ -4,14 +4,13 @@
   "description": "Api rocketnotes",
   "scripts": {
     "dev": "tsx --watch --inspect --no-warnings  src/server.ts",
-
     "build": "tsup",
-    "start": "npm build && node dist/server.js",
+    "migrate": "knex migrate:latest",
+    "start": "npm run build  && node dist/server.js",
     "lint-staged": "lint-staged",
     "lint": "eslint src -- ext .ts -- fix",
     "prepare": "husky install"
   },
-
   "engines": {
     "node": ">=20.9.0"
   },
@@ -27,11 +26,15 @@
     ]
   },
   "dependencies": {
+    "@types/bcrypt": "5.0.2",
+    "bcrypt": "5.1.1",
     "dotenv": "16.3.1",
     "express": "4.18.2",
     "express-async-errors": "3.1.1",
     "knex": "3.1.0",
     "pg": "8.11.3",
+    "reflect-metadata": "0.2.1",
+    "tsyringe": "4.8.0",
     "zod": "3.22.4"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "@types/node": "20.10.8",
     "@types/swagger-ui-express": "4.1.6",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "cpy-cli": "5.0.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard-with-typescript": "43.0.0",

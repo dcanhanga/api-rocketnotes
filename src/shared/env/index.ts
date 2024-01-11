@@ -2,13 +2,11 @@ import 'dotenv/config';
 import { z } from 'zod';
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
+  NODE_ENV: z.enum(['dev', 'test', 'production']).default('production'),
   PORT: z.coerce.number().default(3033),
-  DB_HOST: z.string().default('localhost'),
-  DB_USER: z.string().default('rocketnotes'),
-  DB_PORT: z.coerce.number().default(5432),
-  DB_PASSWORD: z.string().default('rocketnotes'),
-  DB_DATABASE: z.string().default('rocketnotes')
+  DATABASE_URL: z
+    .string()
+    .default('postgresql://rocketnotes:rocketnotes@localhost:5432/rocketnotes')
 });
 
 const _env = envSchema.safeParse(process.env);
