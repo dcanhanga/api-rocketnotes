@@ -6,6 +6,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3033),
   DB_HOST: z.string().default('localhost'),
   DB_USER: z.string().default('rocketnotes'),
+  DB_PORT: z.coerce.number().default(5432),
   DB_PASSWORD: z.string().default('rocketnotes'),
   DB_DATABASE: z.string().default('rocketnotes')
 });

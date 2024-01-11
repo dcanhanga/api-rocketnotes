@@ -4,13 +4,14 @@
   "description": "Api rocketnotes",
   "scripts": {
     "dev": "tsx --watch --inspect --no-warnings  src/server.ts",
+
     "build": "tsup",
     "start": "npm build && node dist/server.js",
     "lint-staged": "lint-staged",
     "lint": "eslint src -- ext .ts -- fix",
     "prepare": "husky install"
   },
-  "type": "module",
+
   "engines": {
     "node": ">=20.9.0"
   },
@@ -19,10 +20,10 @@
   "license": "MIT",
   "lint-staged": {
     "*.md": [
-      "yarn prettier --write"
+      "npx prettier --write"
     ],
     "*.{js,ts}": [
-      "yarn eslint --fix"
+      "npx eslint --fix"
     ]
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "express": "4.18.2",
     "express-async-errors": "3.1.1",
     "knex": "3.1.0",
+    "pg": "8.11.3",
     "zod": "3.22.4"
   },
   "devDependencies": {
@@ -49,6 +51,7 @@
     "husky": "8.0.3",
     "lint-staged": "15.2.0",
     "prettier": "3.1.1",
+    "ts-node": "10.9.2",
     "tsup": "8.0.1",
     "tsx": "4.7.0",
     "typescript": "5.3.3"
