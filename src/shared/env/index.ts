@@ -2,8 +2,11 @@ import 'dotenv/config';
 import { z } from 'zod';
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
-  PORT: z.coerce.number().default(3033)
+  NODE_ENV: z.enum(['dev', 'test', 'production']).default('production'),
+  PORT: z.coerce.number().default(3033),
+  DATABASE_URL: z
+    .string()
+    .default('postgresql://rocketnotes:rocketnotes@localhost:5432/rocketnotes')
 });
 
 const _env = envSchema.safeParse(process.env);
