@@ -4,7 +4,8 @@
     "lib": ["ES6"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "ESNext",
+    "module": "CommonJS",
+
     "rootDir": ".",
     "moduleResolution": "node",
     "baseUrl": "./",
@@ -13,11 +14,10 @@
     },
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "./dist",
     "removeComments": true,
     "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true
-  }
+  },
 }

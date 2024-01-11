@@ -1,8 +1,9 @@
 import { type NextFunction, type Request, type Response } from 'express';
 import { ZodError } from 'zod';
 
-import { env } from '@/utils/env';
-import { AppError } from '@/utils/errors/appError';
+import { env } from '../shared/env';
+import { AppError } from '../shared/errors/appError';
+
 export const asyncErros = (
   error: Error,
   request: Request,
