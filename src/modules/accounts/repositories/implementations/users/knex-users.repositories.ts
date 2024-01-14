@@ -1,4 +1,4 @@
-import { type IUsersRepository } from '../../../interfaces/IUsersRepository';
+import { type IUsersRepository } from '../../interfaces/IUsersRepository';
 
 import { knex } from '@/database/knex';
 import { type IUser } from '@/modules/accounts/model/users';
