@@ -10,10 +10,10 @@ class CreateUsersController {
   handle = async (request: Request, response: Response): Promise<Response> => {
     const createUserUseCase = container.resolve(CreateUsersUseCase);
 
-    const avatar = request.file.firebaseUrl;
+    const avatar = request.user.firebaseUrl;
     const data: ICreateUsersDTO = { ...usersBodySchema.parse(request.body) };
     data.avatar_url = avatar;
-    data.storage_url = request.body.storage_url;
+    data.storage_url = request.user.storageUrl;
 
     await createUserUseCase.execute(data);
 

@@ -27,8 +27,8 @@ const saveAvatar = async (
   stream.on('finish', async () => {
     try {
       await file.makePublic();
-      request.file.firebaseUrl = file.publicUrl();
-      request.body.storage_url = request.body.storage_url ?? storageUrl;
+      request.user.firebaseUrl = file.publicUrl();
+      request.user.storageUrl = request.body.storage_url ?? storageUrl;
 
       next();
     } catch (error) {
@@ -55,6 +55,58 @@ const generateStorageUrl = (): string => {
   return `https://storage.googleapis.com/${STORAGE_BUCKET}/${uniqueId}`;
 };
 
+// export const uploadImage = async (
+//   request: Request,
+//   response: Response,
+//   next: NextFunction
+// ): Promise<void> => {
+//   if (!request.file) {
+//     next();
+//     return;
+//   }
+
+//   const image = request.file;
+//   const avatarName = `avatar.${image.originalname.split('.').pop()}`;
+
+//   if (request.body.storage_url) {
+//     const existingAvatar = firebase.file(
+//       `${request.body.storage_url}/${avatarName}`
+//     );
+//     const [existingFiles] = await existingAvatar.get();
+
+//     if (existingFiles.name) {
+//       try {
+//         await deleteExistingAvatar(existingAvatar);
+//         const avatarFireBasePath = `${request.body.storage_url}/${avatarName}`;
+//         await saveAvatar(
+//           avatarFireBasePath,
+//           request.body.storage_url as string,
+//           image,
+//           request,
+//           next
+//         );
+//       } catch (error) {
+//         console.error('Erro ao processar o avatar existente:', error);
+//         next(error);
+//       }
+//     }
+//   } else {
+//     const email = request.body.email;
+//     const usersRepository = new UsersRepository();
+//     const user = await usersRepository.findByEmail(email as string);
+//     if (user) {
+//       throw new AppError('Este e-mail já está cadastrado', 409);
+//     }
+//     try {
+//       const storageUrl = generateStorageUrl();
+//       const avatarFireBasePath = `${storageUrl}/${avatarName}`;
+//       await saveAvatar(avatarFireBasePath, storageUrl, image, request, next);
+//     } catch (error) {
+//       console.error('Erro ao processar o novo avatar:', error);
+//       next(error);
+//     }
+//   }
+// };
 export const uploadImage = async (
   request: Request,
   response: Response,
@@ -67,6 +119,10 @@ export const uploadImage = async (
 
   const image = request.file;
   const avatarName = `avatar.${image.originalname.split('.').pop()}`;
+
+  if (!request.user) {
+    request.user = {};
+  }
 
   if (request.body.storage_url) {
     const existingAvatar = firebase.file(
@@ -95,7 +151,7 @@ export const uploadImage = async (
     const usersRepository = new UsersRepository();
     const user = await usersRepository.findByEmail(email as string);
     if (user) {
-      throw new AppError('Email areadyExists.', 401);
+      throw new AppError('Este e-mail já está cadastrado', 409);
     }
     try {
       const storageUrl = generateStorageUrl();

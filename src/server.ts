@@ -19,10 +19,6 @@ const startServer = async (): Promise<void> => {
   await waitForDatabaseConnection();
   console.log('Starting the server...');
   app.listen(env.PORT, () => {
-    const nanoseconds = process.hrtime.bigint();
-    const uniqueId = nanoseconds.toString();
-    console.log(uniqueId);
-
     console.log(`Server is 🚀 on port  http://localhost:${env.PORT}`);
   });
 };

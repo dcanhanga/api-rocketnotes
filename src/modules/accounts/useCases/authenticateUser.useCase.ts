@@ -38,6 +38,7 @@ class AuthenticateUserUseCase {
       subject: user.id,
       expiresIn: auth.expire_in
     });
+
     return {
       user: {
         name: user.name,
