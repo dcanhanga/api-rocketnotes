@@ -16,18 +16,22 @@ class CreateUsersUseCase {
   ) {}
 
   execute = async (data: ICreateUsersDTO): Promise<void> => {
-    const emailAlreadyExits = await this.usersRepository.findByEmail(
+    const emailAlreadyExists = await this.usersRepository.findByEmail(
       data.email
     );
-    if (emailAlreadyExits) {
-      throw new AppError('Esse email já está cadastrado', 409);
+
+    if (emailAlreadyExists) {
+      throw new AppError('Este e-mail já está cadastrado', 409);
     }
 
-    const password_hash = await hash(data.password, 6);
+    const passwordHash = await hash(data.password, 6);
+
     const newUser: IUser = {
       name: data.name,
       email: data.email,
-      password_hash
+      avatar_url: data.avatar_url,
+      storage_url: data.storage_url,
+      password_hash: passwordHash
     };
     await knex.table('users').insert(newUser);
   };

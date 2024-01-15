@@ -4,6 +4,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { IUsersRepository } from '../repositories/interfaces/IUsersRepository';
 
+import auth from '@/config/auth';
 import { AppError } from '@/shared/errors/appError';
 
 interface IRequest {
@@ -27,15 +28,15 @@ class AuthenticateUserUseCase {
   execute = async ({ email, password }: IRequest): Promise<IResponse> => {
     const user = await this.usersRepository.findByEmail(email);
     if (!user) {
-      throw new AppError('Email or password Incorrect!', 400);
+      throw new AppError('Email or password Incorrect!', 401);
     }
     const passwordMatch = await compare(password, user.password_hash);
     if (!passwordMatch) {
-      throw new AppError('Email or password Incorrect!', 400);
+      throw new AppError('Email or password Incorrect!', 401);
     }
-    const token = sign({}, '1c718e15389c944fa75933d293b1eb13', {
+    const token = sign({}, auth.secret, {
       subject: user.id,
-      expiresIn: '1d'
+      expiresIn: auth.expire_in
     });
     return {
       user: {

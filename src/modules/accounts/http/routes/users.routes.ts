@@ -1,9 +1,20 @@
 import { Router } from 'express';
+import multer from 'multer';
 
 import { createUsersController } from '../controller/createUsers.controller';
 
-const usersRoutes = Router();
+import { uploadImage } from '@/middlewares/uploadImage';
 
-usersRoutes.post('/', createUsersController.handle);
+const usersRoutes = Router();
+const upload = multer({
+  storage: multer.memoryStorage()
+});
+
+usersRoutes.post(
+  '/',
+  upload.single('avatar'),
+  uploadImage,
+  createUsersController.handle
+);
 
 export { usersRoutes };
