@@ -5,11 +5,18 @@ import { type ICreateUsersDTO } from '../../dtos';
 import { CreateUsersUseCase } from '../../useCases/createUsers.useCase';
 
 import { usersBodySchema } from '@/shared/validations/zod';
+
 class CreateUsersController {
   handle = async (request: Request, response: Response): Promise<Response> => {
     const createUserUseCase = container.resolve(CreateUsersUseCase);
+
+    const avatar = request.user.firebaseUrl;
     const data: ICreateUsersDTO = { ...usersBodySchema.parse(request.body) };
+    data.avatar_url = avatar;
+    data.storage_url = request.user.storageUrl;
+
     await createUserUseCase.execute(data);
+
     return response.status(201).send();
   };
 }

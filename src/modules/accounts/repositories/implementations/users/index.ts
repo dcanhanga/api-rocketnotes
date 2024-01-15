@@ -1,3 +1,3 @@
-import { KnexUsersRepository } from './knex/knex-users.repositories';
+import { KnexUsersRepository } from './knex-users.repositories';
 
 export const UsersRepository = KnexUsersRepository;
