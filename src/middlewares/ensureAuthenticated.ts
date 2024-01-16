@@ -32,7 +32,7 @@ export const ensureAuthenticated = async (
 
     next();
   } catch (error) {
-    console.error('Error decoding token:', error);
+    console.error('Error decoding token:', error.message);
     throw new AppError('Invalid user ID in the token.', 401);
   }
 };
