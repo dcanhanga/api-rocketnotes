@@ -15,6 +15,7 @@
     },
     "rules": {
       "no-unused-vars": "error",
+      "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-throw-literal": "off",
       "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/method-signature-style": ["error", "property"],

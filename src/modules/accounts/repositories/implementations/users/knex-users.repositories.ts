@@ -17,6 +17,10 @@ class KnexUsersRepository implements IUsersRepository {
   create = async (data: IUser): Promise<void> => {
     await knex.table('users').insert(data);
   };
+
+  update = async (id: string, data: Partial<IUser>): Promise<void> => {
+    await knex.table('users').where({ id }).update(data);
+  };
 }
 
 export { KnexUsersRepository };

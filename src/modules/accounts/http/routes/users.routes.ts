@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import { createUsersController } from '../controller/createUsers.controller';
+import { updateUsersController } from '../controller/updateUsers.controller';
 
 import { ensureAuthenticated } from '@/middlewares/ensureAuthenticated';
 import { uploadImage } from '@/middlewares/uploadImage';
@@ -17,8 +18,11 @@ usersRoutes.post(
   uploadImage,
   createUsersController.handle
 );
-usersRoutes.put('/', ensureAuthenticated, (r, res) => {
-  const id = r.user.id;
-  res.json({ id });
-});
+usersRoutes.put(
+  '/',
+  ensureAuthenticated,
+  upload.single('avatar'),
+  uploadImage,
+  updateUsersController.handle
+);
 export { usersRoutes };
