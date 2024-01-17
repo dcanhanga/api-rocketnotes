@@ -10,7 +10,7 @@ declare namespace Express {
     // };
     user: {
       id?: string;
-      firebaseUrl?: string;
+      avatarUrl?: string;
       storageUrl?: string;
     };
   }
