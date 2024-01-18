@@ -1,4 +1,4 @@
-export const passwordRegex = (value: string): boolean => {
+export const isPasswordValid = (value: string): boolean => {
   const uppercaseRegex = /[A-Z]/;
   const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
   return (
