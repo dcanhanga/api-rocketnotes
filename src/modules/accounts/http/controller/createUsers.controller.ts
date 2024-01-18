@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import { type ICreateUsersDTO } from '../../dtos';
 import { CreateUsersUseCase } from '../../useCases/createUsers.useCase';
 
+import { isImageExtensionValid } from '@/shared/validations/isImageExtensionValid';
 import { createUsersBodySchema } from '@/shared/validations/zod';
 
 class CreateUsersController {
@@ -13,10 +14,10 @@ class CreateUsersController {
     const data: ICreateUsersDTO = {
       ...createUsersBodySchema.parse(request.body)
     };
-    data.avatar_url = request.user?.avatarUrl;
-    data.storage_url = request.user?.storageUrl;
+    isImageExtensionValid(request.file);
+    const file = request.file;
 
-    await createUserUseCase.execute(data);
+    await createUserUseCase.execute({ data, file });
 
     return response.status(201).send();
   };

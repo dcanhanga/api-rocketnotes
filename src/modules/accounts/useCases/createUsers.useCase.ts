@@ -7,7 +7,11 @@ import { IUsersRepository } from '../repositories/interfaces/IUsersRepository';
 
 import { knex } from '@/database/knex';
 import { AppError } from '@/shared/errors/appError';
-
+import { importAvatar } from '@/shared/services/firebase';
+interface ICreateUserControllerExecute {
+  file: Express.Multer.File | undefined;
+  data: ICreateUsersDTO;
+}
 @injectable()
 class CreateUsersUseCase {
   constructor(
@@ -15,7 +19,10 @@ class CreateUsersUseCase {
     private readonly usersRepository: IUsersRepository
   ) {}
 
-  execute = async (data: ICreateUsersDTO): Promise<void> => {
+  execute = async ({
+    data,
+    file
+  }: ICreateUserControllerExecute): Promise<void> => {
     const emailAlreadyExists = await this.usersRepository.findByEmail(
       data.email
     );
@@ -25,7 +32,13 @@ class CreateUsersUseCase {
     }
 
     const passwordHash = await hash(data.password, 6);
-
+    if (file) {
+      const imageToSave = file;
+      const avatarName = `avatar.${file?.originalname.split('.').pop()}`;
+      const urls = await importAvatar({ imageToSave, avatarName });
+      data.avatar_url = urls.avatarUrl;
+      data.storage_url = urls.storageUrl;
+    }
     const newUser: IUser = {
       name: data.name,
       email: data.email,
@@ -33,6 +46,7 @@ class CreateUsersUseCase {
       storage_url: data.storage_url,
       password_hash: passwordHash
     };
+
     await knex.table('users').insert(newUser);
   };
 }
