@@ -3,6 +3,9 @@ interface IUrls {
   storageUrl: string;
 }
 interface IImportAvatar {
-  avatarName: string;
+  avatarName?: string;
   imageToSave: Express.Multer.File;
+}
+interface IUploadAvatar extends IImportAvatar {
+  storageUrl?: string;
 }

@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import { type IUpdateUsersDTO } from '../../dtos';
 import { UpdateUsersUseCase } from '../../useCases/updateUsers.useCase';
 
+import { isImageExtensionValid } from '@/shared/validations/isImageExtensionValid';
 import { updateUsersBodySchema } from '@/shared/validations/zod';
 class UpdateUsersController {
   handle = async (request: Request, response: Response): Promise<Response> => {
@@ -12,10 +13,9 @@ class UpdateUsersController {
       ...updateUsersBodySchema.parse(request.body)
     };
     data.id = request.user.id;
-    data.avatar_url = request.user.avatarUrl;
-    data.storage_url = request.user.storageUrl;
-
-    await updateUsersUseCase.execute(data);
+    isImageExtensionValid(request.file);
+    const file = request.file;
+    await updateUsersUseCase.execute({ data, file });
     return response.json({ data });
   };
 }

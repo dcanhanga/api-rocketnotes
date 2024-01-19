@@ -11,4 +11,4 @@ admin.initializeApp({
 
 export const firebase = admin.storage().bucket();
 export { importAvatar } from './importAvatar';
-export const updateAvatar = 'aaaaa';
+export { updateAvatar } from './updateAvatar';
