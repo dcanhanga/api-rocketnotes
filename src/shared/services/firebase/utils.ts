@@ -73,14 +73,3 @@ export const generateStorageUrl = (): string => {
   const uniqueId = nanoseconds.toString();
   return `${storageGoogleApisUrl}/${STORAGE_BUCKET}/${uniqueId}`;
 };
-
-// export const importAvatar = async (
-//   avatarName: string,
-//   imageToSave: Express.Multer.File
-// ): Promise<IUrls> => {
-//   const storageUrl = generateStorageUrl();
-//   const avatarPath = `${storageUrl}/${avatarName}`;
-
-//   const urls = await upload({ avatarPath, storageUrl, imageToSave });
-//   return urls;
-// };

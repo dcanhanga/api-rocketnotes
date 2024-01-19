@@ -16,7 +16,6 @@ usersRoutes.put(
   '/',
   ensureAuthenticated,
   upload.single('avatar'),
-  // uploadImage,
   updateUsersController.handle
 );
 export { usersRoutes };

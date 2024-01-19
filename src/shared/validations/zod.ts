@@ -21,7 +21,7 @@ export const updateUsersBodySchema = z.object({
     .string()
     .refine(isPasswordValid, isPasswordValidMessage)
     .optional(),
-  old_password: z.string(),
+  old_password: z.string().optional(),
   avatar_url: z.string().url(avatarUrlInvalidMessage).optional(),
   storage_url: z.string().url(storeUrlInvalidMessage).optional()
 });
