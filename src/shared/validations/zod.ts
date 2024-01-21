@@ -17,11 +17,14 @@ export const createUsersBodySchema = z.object({
 export const updateUsersBodySchema = z.object({
   name: z.string().optional().optional(),
   email: z.string().email(emailInvalidMessage).optional(),
-  password: z
-    .string()
-    .refine(isPasswordValid, isPasswordValidMessage)
-    .optional(),
+  password: z.string().refine(isPasswordValid, isPasswordValidMessage).optional(),
   old_password: z.string().optional(),
   avatar_url: z.string().url(avatarUrlInvalidMessage).optional(),
   storage_url: z.string().url(storeUrlInvalidMessage).optional()
+});
+export const createNotesBodySchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  tags: z.array(z.string()),
+  links: z.array(z.string()).optional()
 });

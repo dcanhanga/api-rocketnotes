@@ -2,8 +2,8 @@
 import { type NextFunction, type Request, type Response } from 'express';
 import { ZodError } from 'zod';
 
-import { env } from '../shared/env';
-import { AppError } from '../shared/errors/appError';
+import { env } from '@/config/env';
+import { AppError } from '@/shared/errors/appError';
 
 export const asyncErros = (
   error: Error,
@@ -15,9 +15,7 @@ export const asyncErros = (
     return response.status(error.statusCode).json({ message: error.message });
   }
   if (error instanceof ZodError) {
-    return response
-      .status(400)
-      .json({ message: 'Validation error', issues: error.format() });
+    return response.status(400).json({ message: 'Validation error', issues: error.format() });
   }
   if (env.NODE_ENV !== 'production') {
     console.error(error);
