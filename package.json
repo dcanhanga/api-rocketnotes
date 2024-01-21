@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Api rocketnotes",
   "scripts": {
-    "dev": "tsx --watch --inspect --no-warnings  src/server.ts",
+    "dev": "tsx --watch --env-file .env --inspect --no-warnings  src/server.ts",
     "build": "tsup",
     "migrate": "knex migrate:latest",
-    "start": "npm run build  && node dist/server.js",
+    "start": "npm run build  && node --env-file .env dist/server.js",
     "lint-staged": "lint-staged",
     "lint": "eslint src -- ext .ts -- fix",
     "prepare": "husky install"
@@ -28,7 +28,6 @@
   "dependencies": {
     "@types/bcrypt": "5.0.2",
     "bcrypt": "5.1.1",
-    "dotenv": "16.3.1",
     "express": "4.18.2",
     "express-async-errors": "3.1.1",
     "firebase-admin": "12.0.0",

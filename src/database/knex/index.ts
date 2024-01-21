@@ -2,7 +2,7 @@
 import knexSetup, { type Knex } from 'knex';
 import path from 'path';
 
-import { env } from '../../shared/env';
+import { env } from '../../config/env';
 const MAX_CONNECTION_ATTEMPTS = 5;
 const RETRY_INTERVAL_MS = 2000; // 2 segundos
 
