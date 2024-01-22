@@ -1,7 +1,7 @@
 import { type IUsersRepository } from '../../interfaces/IUsersRepository';
 
 import { knex } from '@/database/knex';
-import { type IUser } from '@/modules/accounts/model/users';
+import { type IUser } from '@/modules/model/users';
 
 class KnexUsersRepository implements IUsersRepository {
   findByEmail = async (email: string): Promise<IUser | undefined> => {

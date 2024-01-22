@@ -1,12 +1,13 @@
+import { type ILinks } from '../../../model/notes';
 import { type INotesRepository } from '../../interfaces/INotesRepository';
 
 import { knex } from '@/database/knex';
-import { type INotes } from '@/modules/accounts/model/notes';
 import {
   type ICreateTagsDTO,
   type ICreateLinksDTO,
   type ICreateNotesDTO
 } from '@/modules/notes/dtos';
+import { type ITags, type INotes } from '@/modules/notes/model/notes';
 
 class KnexNotesRepository implements INotesRepository {
   findByTitle = async (title: string): Promise<INotes | undefined> => {
@@ -34,6 +35,21 @@ class KnexNotesRepository implements INotesRepository {
       user_id: userId
     }));
     await knex('tags').insert(tagsToInsert);
+  };
+
+  listNote = async (id: string): Promise<INotes | undefined> => {
+    const note = await knex('notes').where({ id }).first();
+    return note;
+  };
+
+  listTags = async (noteId: string): Promise<ITags[]> => {
+    const tags = await knex('tags').where({ note_id: noteId }).orderBy('name');
+    return tags;
+  };
+
+  listLinks = async (noteId: string): Promise<ILinks[]> => {
+    const links = await knex('links').where({ note_id: noteId }).orderBy('created_at');
+    return links;
   };
 }
 export { KnexNotesRepository };
