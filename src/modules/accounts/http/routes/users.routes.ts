@@ -12,10 +12,5 @@ const upload = multer({
 });
 
 usersRoutes.post('/', upload.single('avatar'), createUsersController.handle);
-usersRoutes.put(
-  '/',
-  ensureAuthenticated,
-  upload.single('avatar'),
-  updateUsersController.handle
-);
+usersRoutes.put('/', ensureAuthenticated, upload.single('avatar'), updateUsersController.handle);
 export { usersRoutes };

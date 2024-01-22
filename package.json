@@ -8,7 +8,7 @@
     "migrate": "knex migrate:latest",
     "start": "npm run build  && node --env-file .env dist/server.js",
     "lint-staged": "lint-staged",
-    "lint": "eslint src -- ext .ts -- fix",
+    "lint": "eslint src --ext .ts --fix",
     "prepare": "husky install"
   },
   "engines": {

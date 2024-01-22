@@ -8,11 +8,7 @@ interface IUpload {
   imageToSave: Express.Multer.File;
 }
 
-export const upload = async ({
-  avatarPath,
-  imageToSave,
-  storageUrl
-}: IUpload): Promise<IUrls> => {
+export const upload = async ({ avatarPath, imageToSave, storageUrl }: IUpload): Promise<IUrls> => {
   return await new Promise<IUrls>((resolve, reject) => {
     const file = firebase.file(avatarPath);
 
@@ -41,9 +37,7 @@ export const upload = async ({
   });
 };
 
-export const findAvatarImage = async (
-  firebaseFolder: string
-): Promise<File[]> => {
+export const findAvatarImage = async (firebaseFolder: string): Promise<File[]> => {
   const [files] = await firebase.getFiles({ prefix: firebaseFolder });
 
   const imageFiles = files.filter(file => {

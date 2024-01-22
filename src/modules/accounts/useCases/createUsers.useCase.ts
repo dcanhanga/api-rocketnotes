@@ -19,13 +19,8 @@ class CreateUsersUseCase {
     private readonly usersRepository: IUsersRepository
   ) {}
 
-  execute = async ({
-    data,
-    file
-  }: ICreateUserControllerExecute): Promise<void> => {
-    const emailAlreadyExists = await this.usersRepository.findByEmail(
-      data.email
-    );
+  execute = async ({ data, file }: ICreateUserControllerExecute): Promise<void> => {
+    const emailAlreadyExists = await this.usersRepository.findByEmail(data.email);
 
     if (emailAlreadyExists) {
       throw new AppError('Este e-mail já está cadastrado', 409);
