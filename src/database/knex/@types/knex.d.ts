@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Knex } from 'knex';
 
-import { type INotes, type ILinks } from '@/modules/accounts/model/notes';
-import { type IUser } from '@/modules/accounts/model/users';
+import { type IUser } from '@/modules/model/users';
+import { type INotes, type ILinks } from '@/modules/notes/model/notes';
 declare module 'knex/types/tables' {
   export interface Tables {
     users: IUser;

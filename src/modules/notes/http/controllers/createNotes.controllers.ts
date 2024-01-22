@@ -11,7 +11,7 @@ class CreateNotesController {
     const createNotesUseCase = container.resolve(CreateNotesUseCase);
     data.userId = request.user.id;
     await createNotesUseCase.execute(data);
-    return response.status(201).json({ notes: data });
+    return response.status(201).json({ message: `Nota ${data.title} criada com sucesso` });
   };
 }
 export const createNotesController = new CreateNotesController();
