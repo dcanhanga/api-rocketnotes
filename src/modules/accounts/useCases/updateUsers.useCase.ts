@@ -64,13 +64,9 @@ class UpdateUsersUseCase {
     }
   };
 
-  private readonly checkEmail = async (
-    email?: string,
-    id?: string
-  ): Promise<void> => {
+  private readonly checkEmail = async (email?: string, id?: string): Promise<void> => {
     if (email) {
-      const userWithUpdatedEmail =
-        await this.usersRepository.findByEmail(email);
+      const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
 
       if (userWithUpdatedEmail && userWithUpdatedEmail.id !== id) {
         throw new AppError('Este email já em uso', 409);
@@ -79,8 +75,7 @@ class UpdateUsersUseCase {
   };
 
   execute = async ({ data, file }: IUpdateUsers): Promise<undefined> => {
-    const { email, name, old_password, password, avatar_url, id, storage_url } =
-      data;
+    const { email, name, old_password, password, avatar_url, id, storage_url } = data;
     const avatarName = `avatar.${file?.originalname.split('.').pop()}`;
 
     if (file && !email) {
@@ -90,9 +85,7 @@ class UpdateUsersUseCase {
     }
 
     if (!old_password) {
-      throw new AppError(
-        'Você precisa inserir a password antiga para alterar os seus dados'
-      );
+      throw new AppError('Você precisa inserir a password antiga para alterar os seus dados');
     }
 
     this.checkID(id);
