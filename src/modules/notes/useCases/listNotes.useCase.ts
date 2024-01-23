@@ -1,9 +1,11 @@
 import { inject, injectable } from 'tsyringe';
 
-import { type ITags, type ILinks } from '../model/notes';
+import { type ILinks } from '../model/links';
+import { type ITags } from '../model/tags';
 import { INotesRepository } from '../repositories/interfaces/INotesRepository';
 
 import { AppError } from '@/shared/errors/appError';
+
 interface INotesResponse {
   id: string;
   title: string;

@@ -1,6 +1,7 @@
 import { type ICreateLinksDTO, type ICreateNotesDTO, type ICreateTagsDTO } from '../../dtos';
-
-import { type ITags, type INotes, type ILinks } from '@/modules/notes/model/notes';
+import { type ILinks } from '../../model/links';
+import { type INotes } from '../../model/notes';
+import { type ITags } from '../../model/tags';
 
 export interface INotesRepository {
   findByTitle: (title: string) => Promise<INotes | undefined>;
@@ -10,4 +11,5 @@ export interface INotesRepository {
   listTags: (note_id: string) => Promise<ITags[]>;
   listLinks: (noteId: string) => Promise<ILinks[]>;
   listNote: (id: string) => Promise<INotes | undefined>;
+  delete: (noteId: string) => Promise<void>;
 }
