@@ -19,3 +19,8 @@ export interface INotesDTO {
   tags: string[];
   links?: string[];
 }
+export interface IGetNoteDetails {
+  userId: string;
+  title?: string;
+  tags?: string;
+}
