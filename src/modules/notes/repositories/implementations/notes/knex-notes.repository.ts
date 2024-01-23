@@ -58,7 +58,7 @@ class KnexNotesRepository implements INotesRepository {
   };
 
   index = async (userId: string): Promise<INotes[]> => {
-    const notes = await knex('notes').where({ id: userId });
+    const notes = await knex('notes').where({ user_id: userId }).orderBy('title');
     return notes;
   };
 }

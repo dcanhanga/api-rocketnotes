@@ -5,9 +5,13 @@ import { INotesRepository } from '../repositories/interfaces/INotesRepository';
 
 @injectable()
 class IndexNotesUseCase {
-  constructor(@inject('NotesRepositories') private readonly indexNotesUseCase: INotesRepository) {}
+  constructor(
+    @inject('NotesRepository')
+    private readonly notesRepository: INotesRepository
+  ) {}
+
   execute = async (userId: string): Promise<INotes[]> => {
-    const notes = await this.indexNotesUseCase.index(userId);
+    const notes = await this.notesRepository.index(userId);
     return notes;
   };
 }
