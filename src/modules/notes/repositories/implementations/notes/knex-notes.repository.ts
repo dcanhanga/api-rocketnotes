@@ -4,7 +4,8 @@ import { knex } from '@/database/knex';
 import {
   type ICreateTagsDTO,
   type ICreateLinksDTO,
-  type ICreateNotesDTO
+  type ICreateNotesDTO,
+  type IGetNoteDetails
 } from '@/modules/notes/dtos';
 import { type ILinks } from '@/modules/notes/model/links';
 import { type INotes } from '@/modules/notes/model/notes';
@@ -57,8 +58,22 @@ class KnexNotesRepository implements INotesRepository {
     await knex('notes').where({ id: noteId }).delete();
   };
 
-  listUserNotes = async (userId: string): Promise<INotes[]> => {
-    const notes = await knex('notes').where({ user_id: userId }).orderBy('title');
+  listUserNotes = async ({ userId, title, tags }: IGetNoteDetails): Promise<INotes[]> => {
+    if (tags) {
+      const listTags = tags.split(',').map(tag => tag.trim());
+      const notes = knex('tags')
+        .select(['notes.id', 'notes.title', 'notes.user_id'])
+        .where('notes.user_id', userId)
+        .whereRaw('LOWER(title) LIKE ?', `%${title?.toLowerCase()}%`)
+        .whereIn('name', listTags)
+        .innerJoin('notes', 'notes.id', 'tags.note_id')
+        .orderBy('notes.title');
+      return await notes;
+    }
+    const notes = await knex('notes')
+      .where({ user_id: userId })
+      .whereRaw('LOWER(title) LIKE ?', `%${title?.toLowerCase()}%`)
+      .orderBy('title');
     return notes;
   };
 }

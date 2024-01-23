@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
+import { type IGetNoteDetails } from '../dtos';
 import { type INotes } from '../model/notes';
 import { INotesRepository } from '../repositories/interfaces/INotesRepository';
 
@@ -10,8 +11,8 @@ class ListUserNotesUseCase {
     private readonly notesRepository: INotesRepository
   ) {}
 
-  execute = async (userId: string): Promise<INotes[]> => {
-    const notes = await this.notesRepository.listUserNotes(userId);
+  execute = async ({ userId, title, tags }: IGetNoteDetails): Promise<INotes[]> => {
+    const notes = await this.notesRepository.listUserNotes({ userId, title, tags });
     return notes;
   };
 }
