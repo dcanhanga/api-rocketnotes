@@ -56,5 +56,10 @@ class KnexNotesRepository implements INotesRepository {
   delete = async (noteId: string): Promise<void> => {
     await knex('notes').where({ id: noteId }).delete();
   };
+
+  index = async (userId: string): Promise<INotes[]> => {
+    const notes = await knex('notes').where({ id: userId });
+    return notes;
+  };
 }
 export { KnexNotesRepository };
