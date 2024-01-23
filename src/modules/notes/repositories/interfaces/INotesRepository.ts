@@ -12,4 +12,5 @@ export interface INotesRepository {
   listLinks: (noteId: string) => Promise<ILinks[]>;
   listNote: (id: string) => Promise<INotes | undefined>;
   delete: (noteId: string) => Promise<void>;
+  index: (userId: string) => Promise<INotes[]>;
 }
