@@ -16,14 +16,14 @@ interface INotesResponse {
   links: ILinks[];
 }
 @injectable()
-class ListNotesUseCase {
+class GetNoteDetailsUseCase {
   constructor(
     @inject('NotesRepository')
     private readonly notesRepository: INotesRepository
   ) {}
 
   execute = async (id: string): Promise<INotesResponse> => {
-    const note = await this.notesRepository.listNote(id);
+    const note = await this.notesRepository.getNoteDetails(id);
 
     if (!note?.id) {
       throw new AppError('Nota não encontrada', 404);
@@ -36,4 +36,4 @@ class ListNotesUseCase {
     return { id: noteId, title, description, created_at, updated_at, tags, links };
   };
 }
-export { ListNotesUseCase };
+export { GetNoteDetailsUseCase };

@@ -2,15 +2,15 @@ import { Router } from 'express';
 
 import { createNotesController } from '../controllers/createNotes.controllers';
 import { deleteNotesControllers } from '../controllers/deleteNotes.controllers';
-import { indexNotesController } from '../controllers/IndexNotes.controllers';
-import { listNotesController } from '../controllers/listNotes.controllers';
+import { getNoteDetailsController } from '../controllers/getNoteDetails.controllers';
+import { listUserNotesController } from '../controllers/listUserNotes.controllers';
 
 import { ensureAuthenticated } from '@/middlewares/ensureAuthenticated';
 
 const notesRoutes = Router();
 
-notesRoutes.get('/:id', ensureAuthenticated, listNotesController.handle);
-notesRoutes.get('/', ensureAuthenticated, indexNotesController.handle);
+notesRoutes.get('/:id', ensureAuthenticated, getNoteDetailsController.handle);
+notesRoutes.get('/', ensureAuthenticated, listUserNotesController.handle);
 
 notesRoutes.post('/', ensureAuthenticated, createNotesController.handle);
 
