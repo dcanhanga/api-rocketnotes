@@ -10,7 +10,7 @@ class DeleteNotesUseCase {
   ) {}
 
   execute = async (noteId: string): Promise<void> => {
-    await this.notesRepository.delete(noteId);
+    await this.notesRepository.deleteNote(noteId);
   };
 }
 export { DeleteNotesUseCase };

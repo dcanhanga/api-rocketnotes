@@ -38,7 +38,7 @@ class KnexNotesRepository implements INotesRepository {
     await knex('tags').insert(tagsToInsert);
   };
 
-  listNote = async (id: string): Promise<INotes | undefined> => {
+  getNoteDetails = async (id: string): Promise<INotes | undefined> => {
     const note = await knex('notes').where({ id }).first();
     return note;
   };
@@ -53,11 +53,11 @@ class KnexNotesRepository implements INotesRepository {
     return links;
   };
 
-  delete = async (noteId: string): Promise<void> => {
+  deleteNote = async (noteId: string): Promise<void> => {
     await knex('notes').where({ id: noteId }).delete();
   };
 
-  index = async (userId: string): Promise<INotes[]> => {
+  listUserNotes = async (userId: string): Promise<INotes[]> => {
     const notes = await knex('notes').where({ user_id: userId }).orderBy('title');
     return notes;
   };

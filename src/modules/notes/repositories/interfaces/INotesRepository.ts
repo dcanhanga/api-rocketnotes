@@ -8,9 +8,9 @@ export interface INotesRepository {
   createNote: ({ description, title }: ICreateNotesDTO) => Promise<string>;
   createTags: ({ noteId, tags, userId }: ICreateTagsDTO) => Promise<void>;
   createLinks: ({ links, noteId }: ICreateLinksDTO) => Promise<void>;
-  listTags: (note_id: string) => Promise<ITags[]>;
+  listTags: (noteId: string) => Promise<ITags[]>;
   listLinks: (noteId: string) => Promise<ILinks[]>;
-  listNote: (id: string) => Promise<INotes | undefined>;
-  delete: (noteId: string) => Promise<void>;
-  index: (userId: string) => Promise<INotes[]>;
+  getNoteDetails: (noteId: string) => Promise<INotes | undefined>; // Renomeei para "getNoteDetails" para indicar que retorna detalhes específicos de uma nota.
+  deleteNote: (noteId: string) => Promise<void>; // Renomeei para "deleteNote" para indicar que o método deleta uma nota específica.
+  listUserNotes: (userId: string) => Promise<INotes[]>; // Renomeei para "listUserNotes" para indicar que o método lista todas as notas de um usuário.
 }
