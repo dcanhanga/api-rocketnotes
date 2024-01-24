@@ -10,7 +10,8 @@
     "lint-staged": "lint-staged",
     "lint": "eslint src -- ext .ts -- fix",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "test:staged": "jest"
   },
   "engines": {
     "node": ">=20.9.0"
@@ -24,7 +25,8 @@
     ],
     "*.{js,ts}": [
       "npx eslint --fix"
-    ]
+    ],
+    "*.ts":["npm run test:staged"]
   },
   "dependencies": {
     "bcrypt": "5.1.1",
