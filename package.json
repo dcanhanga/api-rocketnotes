@@ -11,7 +11,7 @@
     "lint": "eslint src -- ext .ts -- fix",
     "prepare": "husky install",
     "test": "jest",
-    "test:staged": "jest"
+    "test:staged": "jest --passWithNoTests"
   },
   "engines": {
     "node": ">=20.9.0"
