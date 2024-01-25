@@ -32,4 +32,18 @@ describe('SignUp Controller', () => {
       new MissingParamsError('Missing param: email')
     );
   });
+  test('Should return 400 if no email is provider', () => {
+    const sut = new SignUpController();
+    const httpRequest = {
+      body: {
+        email: 'any_email@test.com',
+        name: 'any_name'
+      }
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new MissingParamsError('Missing param: password')
+    );
+  });
 });
