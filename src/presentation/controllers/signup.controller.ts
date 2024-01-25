@@ -1,3 +1,4 @@
+import { MissingParamsError } from '../errors/missing-param';
 import { type IHttpResponse, type IHttpRequest } from '../protocols/https';
 
 export class SignUpController {
@@ -5,12 +6,12 @@ export class SignUpController {
     if (!httpRequest.body.name) {
       return {
         statusCode: 400,
-        body: new Error('Missing param: name')
+        body: new MissingParamsError('Missing param: name')
       };
     }
     return {
       statusCode: 400,
-      body: new Error('Missing param: email')
+      body: new MissingParamsError('Missing param: email')
     };
   };
 }
