@@ -4,9 +4,11 @@ import { type IHttpResponse, type IHttpRequest } from '../protocols/https';
 
 export class SignUpController {
   handle = (httpRequest: IHttpRequest): IHttpResponse => {
-    if (!httpRequest.body.name) {
-      return badRequest(new MissingParamsError('Missing param: name'));
+    const requiredFields = ['email', 'name'];
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return badRequest(new MissingParamsError(`Missing param: ${field}`));
+      }
     }
-    return badRequest(new MissingParamsError('Missing param: email'));
   };
 }
