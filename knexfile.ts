@@ -1,3 +1,3 @@
-import { config } from './src/database/knex';
+import { config } from '@/app/server/database/knex';
 
 export default config;

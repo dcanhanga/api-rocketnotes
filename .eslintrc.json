@@ -59,12 +59,7 @@
       "import/resolver": {
         "alias": {
           "map": [
-            ["@src/*", "./src"],
-            ["@docs", "./src/docs"],
-            ["@app", "./src/app"],
-            ["@cars", "./src/app/modules/cars"],
-            ["@accounts", "./src/app/modules/accounts"],
-            ["@utils", "./src/app/utils"]
+
           ],
           "extensions": [".ts", ".tsx", ".js", ".jsx"]
         }
