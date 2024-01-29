@@ -6,5 +6,5 @@ export interface INotesRepository {
   createNote: ({ description, title }: ICreateNotesDTO) => Promise<string>;
   getNoteDetails: (noteId: string) => Promise<INotes | undefined>;
   deleteNote: (noteId: string) => Promise<void>;
-  listUserNotes: ({ userId, title, tags }: IGetNoteDetails) => Promise<INotes[]>;
+  listNotes: ({ userId, title, tags }: IGetNoteDetails) => Promise<INotes[]>;
 }

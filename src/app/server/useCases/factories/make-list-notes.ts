@@ -1,8 +1,8 @@
 import { NotesRepository } from '../../repositories';
-import { ListUserNotesUseCase } from '../list-user-notes.useCase';
+import { ListNotesUseCase } from '../list-notes.useCase';
 
-export const makeListNote = (): ListUserNotesUseCase => {
+export const makeListNote = (): ListNotesUseCase => {
   const notesRepository = new NotesRepository();
-  const listUserNotesUseCase = new ListUserNotesUseCase(notesRepository);
-  return listUserNotesUseCase;
+  const listNotesUseCase = new ListNotesUseCase(notesRepository);
+  return listNotesUseCase;
 };

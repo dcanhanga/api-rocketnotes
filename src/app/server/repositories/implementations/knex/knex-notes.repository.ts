@@ -27,7 +27,7 @@ class KnexNotesRepository implements INotesRepository {
     await knex('notes').where({ id: noteId }).delete();
   };
 
-  listUserNotes = async ({ userId, title, tags }: IGetNoteDetails): Promise<INotes[]> => {
+  listNotes = async ({ userId, title, tags }: IGetNoteDetails): Promise<INotes[]> => {
     let notesQuery = knex('notes')
       .select(['notes.id', 'notes.title', 'notes.user_id'])
       .distinct()

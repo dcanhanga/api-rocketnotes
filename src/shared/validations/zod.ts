@@ -28,7 +28,7 @@ export const createNotesBodySchema = z.object({
   tags: z.array(z.string()),
   links: z.array(z.string()).optional()
 });
-export const listUserNotesUseCaseQuerySchema = z.object({
+export const listNotesQuerySchema = z.object({
   title: z.string().optional(),
   tags: z.string().optional()
 });

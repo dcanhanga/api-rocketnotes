@@ -6,4 +6,4 @@ import { ExpressListNotesController } from './express/express-list-notes.control
 export const createNotesController = new ExpressCreateNotesController();
 export const getNoteDetailsController = new ExpressGetNoteDetailsController();
 export const deleteNotesController = new ExpressDeleteNoteController();
-export const listUserNotesController = new ExpressListNotesController();
+export const listNotesController = new ExpressListNotesController();
