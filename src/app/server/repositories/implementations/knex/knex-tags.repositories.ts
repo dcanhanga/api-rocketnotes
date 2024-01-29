@@ -14,8 +14,8 @@ export class KnexTagsRepository implements ITagsRepository {
     await knex('tags').insert(tagsToInsert);
   };
 
-  listTags = async (noteId: string): Promise<ITags[]> => {
-    const tags = await knex('tags').where({ note_id: noteId }).orderBy('name');
+  listTags = async (userId: string): Promise<ITags[]> => {
+    const tags = await knex('tags').where({ user_id: userId }).orderBy('name');
     return tags;
   };
 }
