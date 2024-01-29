@@ -28,23 +28,36 @@ class KnexNotesRepository implements INotesRepository {
   };
 
   listUserNotes = async ({ userId, title, tags }: IGetNoteDetails): Promise<INotes[]> => {
-    if (tags) {
-      const listTags = tags.split(',').map(tag => tag.trim());
-      const notes = knex('tags')
-        .select(['notes.id', 'notes.title', 'notes.user_id'])
-        .where('notes.user_id', userId)
-        .whereRaw('LOWER(title) LIKE ?', `%${title?.toLowerCase()}%`)
-        .whereIn('name', listTags)
-        .innerJoin('notes', 'notes.id', 'tags.note_id')
-        .orderBy('notes.title');
-      return await notes;
+    let notesQuery = knex('notes')
+      .select(['notes.id', 'notes.title', 'notes.user_id'])
+      .distinct()
+      .where('notes.user_id', userId)
+      .whereNotNull('notes.title');
+
+    if (title) {
+      notesQuery = notesQuery.whereRaw('LOWER(title) LIKE ?', `%${title.toLowerCase()}%`);
     }
 
-    const notes = await knex('notes')
-      .where({ user_id: userId })
-      .whereRaw('LOWER(title) LIKE ?', `%${title?.toLowerCase()}%`)
-      .orderBy('title');
-    return notes;
+    if (tags) {
+      const listTags = tags.split(',').map(tag => tag.trim());
+      const tagsQuery = knex('tags')
+        .select('note_id')
+        .whereIn('name', listTags)
+        .andWhere('user_id', userId);
+
+      notesQuery = notesQuery.whereIn('id', tagsQuery);
+    }
+
+    const notes = await notesQuery.orderBy('title');
+
+    const userTags = await knex('tags').where({ user_id: userId });
+
+    const notesWithTags = notes.map(note => {
+      const notesTags = userTags.filter(tag => tag.note_id === note.id);
+      return { ...note, tags: notesTags };
+    });
+
+    return notesWithTags;
   };
 }
 export { KnexNotesRepository };
